@@ -16,14 +16,13 @@ public class AuthService {
     @Autowired
     UserRepository userRepository;
     public ResponseDto signUp(SignUpDto dto) {
-
         String userEmail = dto.getUserEmail();
         String userPassword = dto.getUserPw();
         String userPasswordCheck = dto.getCheckUserPw();
 
         // email 중복 확인
         try{
-            if(userRepository.existsById(userEmail))
+            if(userRepository.existsByEmail(userEmail))
                 return ResponseDto.setFailed("Existed Email!");
         }catch(Exception e)
         {
@@ -58,8 +57,8 @@ public class AuthService {
     }
     public ResponseDto logIn(LogInDto dto)
     {
-        String userPassword = dto.getUserPw();
         String userId = dto.getUserId();
+        String userPassword = dto.getUserPw();
 
         boolean existed = userRepository.existsByIdAndPassword(userId, userPassword);
         if(!existed) return ResponseDto.setFailed("존재하지 않는 계정입니다.");
@@ -71,8 +70,11 @@ public class AuthService {
             return ResponseDto.setFailed("Data Base Error!");
         }
         user.setLoginStatus(1);
-        userRepository.save(user);
+        try{
+            userRepository.save(user);
+        }catch (Exception e){
+            return ResponseDto.setFailed("Data Base Error!");
+        }
         return ResponseDto.setSuccess("로그인 성공", null);
     }
-
 }

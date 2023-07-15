@@ -10,13 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @ToString
 public class AuthController {
-    final
-    AuthService authService ;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
-
+    @Autowired
+    AuthService authService;
     @PostMapping("/signUp")
     public ResponseDto signUp(@RequestBody SignUpDto requestBody){
         ResponseDto result = authService.signUp(requestBody);
@@ -27,7 +22,7 @@ public class AuthController {
     public ResponseDto login(@RequestBody LogInDto requestBody){
         System.out.println(requestBody);
         ResponseDto result = authService.logIn(requestBody);
-        return null;
+        return result;
     }
 
     @PatchMapping("/logOut")
