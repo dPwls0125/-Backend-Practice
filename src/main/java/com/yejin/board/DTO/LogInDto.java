@@ -12,7 +12,6 @@ import lombok.NonNull;
 public class LogInDto {
     @NonNull
     private String userId;
-
     @NonNull
     private String userPw;
 
