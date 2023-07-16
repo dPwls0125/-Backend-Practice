@@ -9,12 +9,9 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 public class SignUpDto {
-
     private String userEmail;
     private String userPw;
     private String userId;
-
     @NonNull
     private String checkUserPw;
-
 }

@@ -1,12 +1,15 @@
 package com.yejin.board.service;
 
 import com.yejin.board.DTO.LogInDto;
+import com.yejin.board.DTO.LogOutDto;
 import com.yejin.board.DTO.ResponseDto;
 import com.yejin.board.DTO.SignUpDto;
 import com.yejin.board.entity.UserEntity;
 import com.yejin.board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
@@ -24,7 +27,7 @@ public class AuthService {
 
         // email 중복 확인
         try{
-            if(userRepository.existsByEmail(userEmail))
+            if(userRepository.existsByUserEmail(userEmail))
                 return ResponseDto.setFailed("Existed Email!");
         }catch(Exception e)
         {
@@ -62,7 +65,7 @@ public class AuthService {
         String userId = dto.getUserId();
         String userPassword = dto.getUserPw();
 
-        boolean existed = userRepository.existsByIdAndPassword(userId, userPassword);
+        boolean existed = userRepository.existsByUserIdAndUserPwd(userId, userPassword);
         if(!existed) return ResponseDto.setFailed("존재하지 않는 계정입니다.");
 
         UserEntity user;
@@ -76,6 +79,24 @@ public class AuthService {
             userRepository.save(user);
         }catch (Exception e){
             return ResponseDto.setFailed("Data Base Error!");
+        }
+        return ResponseDto.setSuccess("로그인 성공", null);
+    }
+    public ResponseDto logOut(LogOutDto dto){
+
+        String userEmail = dto.getUserEmail();
+        String userId = dto.getUserId();
+        String userPwd = dto.getUserPw();
+
+        UserEntity user;
+        try{
+            user = userRepository.findByUserIdAndUserEmailAndUserPwd(userId, userEmail, userPwd);
+        }catch (Exception e){
+            return ResponseDto.setFailed("Data Base error");
+        }
+
+        if(user.getLoginStatus() == 1){
+            return ResponseDto.setFailed("로그아웃 실패");
         }
         return ResponseDto.setSuccess("로그인 성공", null);
     }

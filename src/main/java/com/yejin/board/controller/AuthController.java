@@ -29,8 +29,10 @@ public class AuthController {
     }
 
     @PatchMapping("/logOut")
-    public ResponseDto modify(@RequestBody LogOutDto logOutDto){
-        return null;
+    public ResponseDto modify(@RequestBody LogOutDto requestBody){
+        System.out.println(requestBody);
+        ResponseDto result = authService.logOut(requestBody);
+        return result;
     }
 
     @DeleteMapping("/deleteUser")

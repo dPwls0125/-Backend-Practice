@@ -2,6 +2,7 @@ package com.yejin.board.entity;
 
 
 import com.yejin.board.DTO.LogInDto;
+import com.yejin.board.DTO.LogOutDto;
 import com.yejin.board.DTO.SignUpDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +37,11 @@ public class UserEntity {
         this.userPwd = dto.getUserPw();
         this.userEmail = dto.getUserEmail();
         this.userId = dto.getUserId();
+    }
+    public UserEntity(LogOutDto dto){
+        this.userPwd = dto.getUserId();
+        this.userEmail = dto.getUserEmail();
+        this.userId = dto.getUserPw();
     }
 }
 
