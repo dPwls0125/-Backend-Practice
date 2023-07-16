@@ -5,6 +5,7 @@ import com.yejin.board.DTO.ResponseDto;
 import com.yejin.board.DTO.SignUpDto;
 import com.yejin.board.entity.UserEntity;
 import com.yejin.board.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class AuthService {
 
     @Autowired
     UserRepository userRepository;
+
     public ResponseDto signUp(SignUpDto dto) {
         String userEmail = dto.getUserEmail();
         String userPassword = dto.getUserPw();

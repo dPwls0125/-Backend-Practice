@@ -2,6 +2,7 @@ package com.yejin.board.controller;
 
 import com.yejin.board.DTO.*;
 import com.yejin.board.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @ToString
+
 public class AuthController {
+
     @Autowired
     AuthService authService;
     @PostMapping("/signUp")
